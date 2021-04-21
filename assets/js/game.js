@@ -7,6 +7,7 @@ var randomNumber = function(min, max) {
   return value;
 };
 
+
 var fightOrSkip = function() {
   // ask player if they'd lik e to fight or skip using fightOrSkip function
   var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' OR 'SKIP' to choose.");
@@ -145,9 +146,21 @@ var startGame = function() {
 var endGame = function() {
   window.alert("The game has now ended. Let's see how you did!");
 
+  // check localStorage for high score
+  var highScore = localStorage.getItem("highscore");
+  if (highScore === null) {
+    highScore = 0;
+  }
   // if player is still alive, player wins!
   if (playerInfo.health > 0) {
     window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + '.');
+    if (playerInfo.money > highScore) {
+      localStorage.setItem(playerInfo.name, playerInfo.money);
+      window.alert("Congratulations " + playerInfo.name + "! You set a new HIGH SCORE of " + playerInfo.money + "!");
+    }
+    else {
+      window.alert("You did not achieve a higher score than " + highScore + ". Please try again.");
+    }
   } else {
     window.alert("You've lost your robot in battle!");
   }
